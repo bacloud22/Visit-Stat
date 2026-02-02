@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-const { VS_DB_URL, DETA_PROJECT_KEY } = process.env
+const { VS_DB_URL, VS_DB_PATH, DETA_PROJECT_KEY } = process.env
 
 /**
  * @typedef { {site_pv: number; site_uv: number; page_pv?: number; page_uv?: number; } } counterType
@@ -22,8 +22,13 @@ module.exports = async () => {
     // is deta space
     if (DETA_PROJECT_KEY) return await require('./storages/deta')()
 
+    // is sqlite
+    if (VS_DB_PATH || (VS_DB_URL && VS_DB_URL.startsWith('sqlite://'))) {
+      return await require('./storages/sqlite')()
+    }
+
     // eslint-disable-next-line no-console
-    if (!VS_DB_URL) return console.log('No environment variables set "VS_DB_URL"')
+    if (!VS_DB_URL) return console.log('No environment variables set "VS_DB_URL" or "VS_DB_PATH"')
 
     // is mongodb
     if (VS_DB_URL.startsWith('mongodb')) return await require('./storages/mongodb')()

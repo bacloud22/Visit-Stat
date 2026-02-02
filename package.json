@@ -8,6 +8,7 @@
     "lint:fix": "eslint --fix index.js && prettier --check --write index.js"
   },
   "dependencies": {
+    "better-sqlite3": "^11.8.1",
     "body-data": "^2.0.4",
     "deta": "^2.0.0",
     "dotenv": "^17.2.3",
