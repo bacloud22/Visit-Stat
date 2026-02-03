@@ -22,18 +22,20 @@ module.exports = async () => {
     // is deta space
     if (DETA_PROJECT_KEY) return await require('./storages/deta')()
 
+    return await require('./storages/sqlite')()
+
     // is sqlite
-    if (VS_DB_PATH || (VS_DB_URL && VS_DB_URL.startsWith('sqlite://'))) {
-      return await require('./storages/sqlite')()
-    }
+    // if (VS_DB_PATH || (VS_DB_URL && VS_DB_URL.startsWith('sqlite://'))) {
+      
+    // }
 
-    // eslint-disable-next-line no-console
-    if (!VS_DB_URL) return console.log('No environment variables set "VS_DB_URL" or "VS_DB_PATH"')
+    // // eslint-disable-next-line no-console
+    // if (!VS_DB_URL) return console.log('No environment variables set "VS_DB_URL" or "VS_DB_PATH"')
 
-    // is mongodb
-    if (VS_DB_URL.startsWith('mongodb')) return await require('./storages/mongodb')()
-    // is redis
-    if (VS_DB_URL.startsWith('redis')) return await require('./storages/redis')()
+    // // is mongodb
+    // if (VS_DB_URL.startsWith('mongodb')) return await require('./storages/mongodb')()
+    // // is redis
+    // if (VS_DB_URL.startsWith('redis')) return await require('./storages/redis')()
   } catch (error) {
     /* eslint-disable no-console */
     console.error('Database connect fault')
